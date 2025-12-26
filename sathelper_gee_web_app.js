@@ -22,6 +22,13 @@ function runAnalysis(point, targetDate, zoom) {
   });
   Map.add(rightPanel);
 
+  var resetButton = ui.Button({
+    label: 'Select New Site',
+    onClick: resetApp,
+    style: {stretch: 'horizontal'}
+  });
+  rightPanel.add(resetButton);
+
   var legendPanel = ui.Panel({
     style: {
       padding: '5px 5px'
@@ -357,6 +364,15 @@ and performes the LST computation:
     
     Map.centerObject(point.geometry(), aoiZoom);
   });
+}
+
+function resetApp() {
+  Map.clear();
+  ui.url.set('latitude', null);
+  ui.url.set('longitude', null);
+  ui.url.set('date', null);
+  ui.url.set('zoom', null);
+  showDefaultView();
 }
 
 function showDefaultView() {
