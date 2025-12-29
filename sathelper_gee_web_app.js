@@ -1,10 +1,42 @@
-// Create a list of points for the user to select from.
-var points = [
-  ee.Feature(ee.Geometry.Point([-76.943681, 42.683010]), {name: 'Greenidge Generation'}),
-  ee.Feature(ee.Geometry.Point([-76.636753, 42.601217]), {name: 'Miliken Station'}),
-  ee.Feature(ee.Geometry.Point([-77.308268, 43.279134]), {name: 'Constellation Nuclear'}),
-  ee.Feature(ee.Geometry.Point([-73.910938, 40.919956]), {name: 'Westchester County Water Treatment'})
+// ========================================================
+// Data Source Configuration
+// ========================================================
+
+// OPTION 1: Hardcoded Points (Inactive)
+// This is used by default.
+/*
+var sites = [
+  {name: 'Greenidge Generation', lat: 42.683010, lon: -76.943681},
+  {name: 'Miliken Station', lat: 42.601217, lon: -76.636753},
+  {name: 'Constellation Nuclear', lat: 43.279134, lon: -77.308268},
+  {name: 'Westchester County Water Treatment', lat: 40.919956, lon: -73.910938}
 ];
+
+// Convert the list of sites into an Earth Engine FeatureCollection
+var points = ee.FeatureCollection(sites.map(function(site) {
+  return ee.Feature(ee.Geometry.Point([site.lon, site.lat]), {name: site.name});
+}));
+*/
+
+// OPTION 2: Use an Earth Engine Table Asset (Recommended for large datasets)
+// Instructions:
+// 1. In the GEE Code Editor, go to the "Assets" tab.
+// 2. Click "New" > "CSV file".
+// 3. Select your local thermal_sites.csv file.
+// 4. Set "X column" to "lon" and "Y column" to "lat".
+// 5. Click "Upload".
+// 6. Once uploaded, copy the "Asset ID" (e.g., "users/yourname/thermal_sites").
+// 7. Uncomment the line below and paste your Asset ID.
+// 8. Comment out the OPTION 1 block above.
+
+var raw_points = ee.FeatureCollection('projects/ee-jferdinando/assets/thermal_sites');
+
+// Ensure features have geometry derived from lat/lon columns
+var points = raw_points.map(function(f) {
+  return f.setGeometry(ee.Geometry.Point([f.getNumber('lon'), f.getNumber('lat')]));
+});
+
+// ========================================================
 
 // Function to run the analysis for a selected point.
 function runAnalysis(point, targetDate, zoom) {
