@@ -29,6 +29,7 @@ var points = ee.FeatureCollection(sites.map(function(site) {
 // 7. Uncomment the line below and paste your Asset ID.
 // 8. Comment out the OPTION 1 block above.
 
+//Change as appropriate to point to the correct project assets:
 var raw_points = ee.FeatureCollection('projects/ee-jferdinando/assets/thermal_sites');
 
 // Ensure features have geometry derived from lat/lon columns
@@ -468,3 +469,20 @@ function initializeApp() {
 Map.onIdle(updateUrl);
 
 initializeApp();
+/*
+<Explore Landsat thermal imagery in Google Earth Engine.>
+Copyright (C) <2025>  <R&R>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
